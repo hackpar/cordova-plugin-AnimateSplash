@@ -27,6 +27,9 @@ var splashscreen = {
     },
     hide:function() {
         exec(null, null, "SplashScreen", "hide", []);
+    },
+    status:function(successCallback,errorCallback) {
+        exec(successCallback, errorCallback, "SplashScreen", "status", []);
     }
 };
 

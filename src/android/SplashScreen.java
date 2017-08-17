@@ -34,6 +34,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AlphaAnimation;
+import org.json.JSONObject;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +60,7 @@ public class SplashScreen extends CordovaPlugin {
     private static Dialog splashDialog;
     private static ProgressDialog spinnerDialog;
     private static boolean firstShow = true;
+    private static boolean endAnimate = false;
     private static boolean lastHideAfterDelay; // https://issues.apache.org/jira/browse/CB-9094
 
     /**
@@ -173,8 +175,15 @@ public class SplashScreen extends CordovaPlugin {
                     webView.postMessage("splashscreen", "show");
                 }
             });
+        } else if (action.equals("status") ){
+
+            if(viewsss.isAnimating()){
+              callbackContext.success("false");
+            }else{
+              callbackContext.success("true");
+            }
         } else {
-            return false;
+             return false;
         }
 
         callbackContext.success();
@@ -327,7 +336,7 @@ public class SplashScreen extends CordovaPlugin {
                 splashDialog.setContentView(viewsss);
                 splashDialog.setCancelable(false);
                 splashDialog.show();
-//alertdialog.builder
+
                 if (preferences.getBoolean("ShowSplashScreenSpinner", true)) {
                     spinnerStart();
                 }
