@@ -60,7 +60,6 @@ public class SplashScreen extends CordovaPlugin {
     private static Dialog splashDialog;
     private static ProgressDialog spinnerDialog;
     private static boolean firstShow = true;
-    private static boolean endAnimate = false;
     private static boolean lastHideAfterDelay; // https://issues.apache.org/jira/browse/CB-9094
 
     /**
