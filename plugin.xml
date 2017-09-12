@@ -76,6 +76,7 @@
 		    </feature>
         </config-file>
 
+        <framework src="lottie-ios" type="podspec" spec="~> 2.1.0"/>
         <header-file src="src/ios/CDVSplashScreen.h" />
         <source-file src="src/ios/CDVSplashScreen.m" />
         <header-file src="src/ios/CDVViewController+SplashScreen.h" />

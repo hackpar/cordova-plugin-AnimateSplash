@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
+#import <Lottie/Lottie.h>
 
 typedef struct {
     BOOL iPhone;
@@ -28,12 +29,13 @@ typedef struct {
     BOOL iPhone6;
     BOOL iPhone6Plus;
     BOOL retina;
-    
+
 } CDV_iOSDevice;
 
 @interface CDVSplashScreen : CDVPlugin {
     UIActivityIndicatorView* _activityView;
     UIImageView* _imageView;
+    LOTAnimationView *LotAnimation;
     NSString* _curImageName;
     BOOL _visible;
     BOOL _destroyed;

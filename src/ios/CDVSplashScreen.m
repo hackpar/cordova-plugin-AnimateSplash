@@ -21,6 +21,7 @@
 #import <Cordova/CDVViewController.h>
 #import <Cordova/CDVScreenOrientationDelegate.h>
 #import "CDVViewController+SplashScreen.h"
+#import <Lottie/Lottie.h>
 
 #define kSplashScreenDurationDefault 3000.0f
 #define kFadeDurationDefault 500.0f
@@ -104,29 +105,53 @@
         | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
     [_activityView startAnimating];
 
+///Users/qinxue/Documents/testQXStudent/www/bootstarp/data.json
     // Set the frame & image later.
     _imageView = [[UIImageView alloc] init];
-    [parentView addSubview:_imageView];
 
-    id showSplashScreenSpinnerValue = [self.commandDelegate.settings objectForKey:[@"ShowSplashScreenSpinner" lowercaseString]];
-    // backwards compatibility - if key is missing, default to true
-    if ((showSplashScreenSpinnerValue == nil) || [showSplashScreenSpinnerValue boolValue])
-    {
-        [parentView addSubview:_activityView];
-    }
+//    LOTAnimationView *LotAnimation = [[LOTAnimationView alloc]initWithContentsOfURL:[NSURL URLWithString:@"~/www/bootstarp/data.json"]];
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
+    NSLog(@"imagePath = %@",imagePath);
+//    LOTAnimationView *LotAnimation = [LOTAnimationView animationWithFilePath:@"~/www/bootstarp/data.json"];
 
-    // Frame is required when launching in portrait mode.
-    // Bounds for landscape since it captures the rotation.
+    LOTAnimationView *LotAnimation = [LOTAnimationView animationNamed:@"data" inBundle:[NSBundle mainBundle]];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat width = size.width;
+    CGFloat height = size.height;
+    LotAnimation.frame = CGRectMake(0, 0, width, height);
+
+    [parentView addSubview:LotAnimation];
+    LotAnimation.loopAnimation = NO;  //????
+
+    [LotAnimation playWithCompletion:^(BOOL animationFinished) {
+        LotAnimation.alpha = 0;
+        // Do Something
+        NSLog(@"bool = %@",animationFinished);
+    }];
+    _destroyed = NO;
+//    [parentView addSubview:_imageView];
+////
+//    id showSplashScreenSpinnerValue = [self.commandDelegate.settings objectForKey:[@"ShowSplashScreenSpinner" lowercaseString]];
+//    // backwards compatibility - if key is missing, default to true
+//    if ((showSplashScreenSpinnerValue == nil) || [showSplashScreenSpinnerValue boolValue])
+//    {
+//        [parentView addSubview:_activityView];
+//    }
+////
+////    // Frame is required when launching in portrait mode.
+////    // Bounds for landscape since it captures the rotation.
     [parentView addObserver:self forKeyPath:@"frame" options:0 context:nil];
     [parentView addObserver:self forKeyPath:@"bounds" options:0 context:nil];
-
+////
     [self updateImage];
-    _destroyed = NO;
+//    _destroyed = NO;
 }
 
 - (void)hideViews
 {
     [_imageView setAlpha:0];
+    [LotAnimation setAlpha:0];
     [_activityView setAlpha:0];
 }
 
