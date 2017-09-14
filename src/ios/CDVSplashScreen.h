@@ -39,9 +39,10 @@ typedef struct {
     NSString* _curImageName;
     BOOL _visible;
     BOOL _destroyed;
+    BOOL status;
 }
 
 - (void)show:(CDVInvokedUrlCommand*)command;
 - (void)hide:(CDVInvokedUrlCommand*)command;
-
+- (void)status:(CDVInvokedUrlCommand*)command;
 @end

@@ -120,14 +120,15 @@
     CGFloat width = size.width;
     CGFloat height = size.height;
     LotAnimation.frame = CGRectMake(0, 0, width, height);
-
+    NSLog(@"success");
     [parentView addSubview:LotAnimation];
     LotAnimation.loopAnimation = NO;  //????
 
     [LotAnimation playWithCompletion:^(BOOL animationFinished) {
         LotAnimation.alpha = 0;
         // Do Something
-        NSLog(@"bool = %@",animationFinished);
+        //NSLog(@"bool = %@",animationFinished);
+        status = true;
     }];
     _destroyed = NO;
 //    [parentView addSubview:_imageView];
@@ -153,6 +154,13 @@
     [_imageView setAlpha:0];
     [LotAnimation setAlpha:0];
     [_activityView setAlpha:0];
+}
+
+- (void)status:(CDVInvokedUrlCommand*)command
+{
+//    BOOL status = status;
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:status];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)destroyViews
